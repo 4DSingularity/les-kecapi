@@ -1,0 +1,42 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Data Pembayaran') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-4">
+                <table class="w-full text-sm text-left text-gray-700 dark:text-gray-200">
+                    <thead class="text-xs uppercase bg-gray-200 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-4 py-2">Nama Siswa</th>
+                            <th class="px-4 py-2">Tanggal</th>
+                            <th class="px-4 py-2">Jumlah</th>
+                            <th class="px-4 py-2">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pembayaran as $data)
+                            <tr class="border-b dark:border-gray-600">
+                                <td class="px-4 py-2">{{ $data->siswa->nama ?? '-' }}</td>
+                                <td class="px-4 py-2">{{ $data->tanggal }}</td>
+                                <td class="px-4 py-2">Rp{{ number_format($data->jumlah, 0, ',', '.') }}</td>
+                                <td class="px-4 py-2">
+                                    <form action="{{ route('pembayaran.destroy', $data) }}" method="POST" class="inline" onsubmit="return confirm('Hapus data?')">
+                                        @csrf @method('DELETE')
+                                        <button class="text-red-500">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                        @if($pembayaran->isEmpty())
+                            <tr><td colspan="4" class="text-center py-4 text-gray-500">Belum ada data.</td></tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
