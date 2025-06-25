@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Siswa extends Model
+class Pertemuan extends Model
 {
     use HasFactory;
 
@@ -14,17 +15,16 @@ class Siswa extends Model
      * Nama tabel database.
      * @var string
      */
-    protected $table = 'siswa';
+    protected $table = 'pertemuan';
 
     /**
      * Atribut yang dapat diisi secara massal.
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama_lengkap',
-        'nomor_telepon',
-        'tanggal_bergabung',
-        'status',
+        'kelas_id',
+        'tanggal_pertemuan',
+        'topik_hari_ini',
     ];
 
     /**
@@ -32,15 +32,23 @@ class Siswa extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'tanggal_bergabung' => 'date',
+        'tanggal_pertemuan' => 'date',
     ];
 
     /**
-     * Relasi: Seorang Siswa dapat mengikuti banyak Pertemuan.
+     * Relasi: Sebuah Pertemuan 'milik' satu Kelas.
+     */
+    public function kelas(): BelongsTo
+    {
+        return $this->belongsTo(Kelas::class);
+    }
+
+    /**
+     * Relasi: Sebuah Pertemuan dihadiri oleh banyak Siswa.
      * (melalui tabel pivot 'absensi')
      */
-    public function pertemuanYangDiikuti(): BelongsToMany
+    public function siswaYangHadir(): BelongsToMany
     {
-        return $this->belongsToMany(Pertemuan::class, 'absensi');
+        return $this->belongsToMany(Siswa::class, 'absensi');
     }
 }

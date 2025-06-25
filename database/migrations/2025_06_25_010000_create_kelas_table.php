@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // database/migrations/xxxx_xx_xx_create_kelas_table.php
         Schema::create('kelas', function (Blueprint $table) {
-        $table->id();
-        $table->string('nama_kelas');
-        $table->text('deskripsi')->nullable();
-        $table->timestamps();
-    });
-
-
+            $table->id();
+            $table->string('nama_kelas');
+            $table->integer('biaya_per_pertemuan');
+            $table->text('deskripsi')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

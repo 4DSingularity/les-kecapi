@@ -2,31 +2,44 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kelas extends Model
 {
     use HasFactory;
 
-    // Bisa pakai guarded jika ingin bebas mengisi semua kolom
-    protected $guarded = [];
+    /**
+     * Nama tabel database.
+     * Wajib jika nama tabel tidak jamak.
+     * @var string
+     */
+    protected $table = 'kelas';
 
-    // Relasi satu kelas memiliki banyak siswa
-    public function siswas()
-    {
-        return $this->hasMany(Siswa::class);
-    }
+    /**
+     * Atribut yang dapat diisi secara massal.
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'nama_kelas',
+        'biaya_per_pertemuan',
+        'deskripsi',
+    ];
 
-    // Relasi satu kelas memiliki banyak jadwal
-    public function jadwals()
-    {
-        return $this->hasMany(Jadwal::class);
-    }
+    /**
+     * Tipe data asli dari atribut.
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'biaya_per_pertemuan' => 'integer',
+    ];
 
-    // Relasi satu kelas memiliki banyak materi
-    public function materis()
+    /**
+     * Relasi: Satu Kelas memiliki banyak Pertemuan.
+     */
+    public function pertemuan(): HasMany
     {
-        return $this->hasMany(Materi::class);
+        return $this->hasMany(Pertemuan::class);
     }
 }
