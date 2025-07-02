@@ -29,7 +29,7 @@ RUN composer install --no-dev --optimize-autoloader
 # Atur kepemilikan file agar Apache bisa menulis ke folder storage dan bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Ubah konfigurasi Apache agar menunjuk ke folder public Laravel
+# Ubah konfigurasi Apache akgar menunjuk ke folder public Laravel
 RUN a2enmod rewrite
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 RUN service apache2 restart
