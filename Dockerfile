@@ -20,8 +20,9 @@ WORKDIR /var/www/html
 # Salin file-file penting terlebih dahulu untuk caching
 COPY package.json package-lock.json composer.json composer.lock ./
 
-# Instal dependensi backend & frontend
-RUN composer install --no-dev --optimize-autoloader
+# --no-scripts mencegah composer menjalankan skrip Laravel (seperti package:discover)
+# yang bisa gagal jika .env belum ada.
+RUN composer install --no-dev --no-scripts --optimize-autoloader
 RUN npm install
 
 # Salin sisa file aplikasi
