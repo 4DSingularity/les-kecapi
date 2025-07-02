@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pertemuans', function (Blueprint $table) {
+        // UBAH DARI 'pertemuans' MENJADI 'pertemuan'
+        Schema::create('pertemuan', function (Blueprint $table) {
             $table->id();
+            // Pastikan tabel 'kelas' juga tunggal jika Anda konsisten
             $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
             $table->date('tanggal_pertemuan');
             $table->string('topik_hari_ini')->nullable();
@@ -25,6 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pertemuans');
+        // UBAH JUGA DI SINI
+        Schema::dropIfExists('pertemuan');
     }
 };

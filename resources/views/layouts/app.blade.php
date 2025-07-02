@@ -53,10 +53,24 @@
             .main-content {
                 flex-grow: 1; /* Konten akan mengisi sisa ruang */
             }
+            .sidebar {
+            background-color: #ffffff; /* Biarkan putih atau krem sangat muda */
+            border-right: 1px solid #EADBC8; /* Batas dengan warna krem gelap */
+            }
+            .sidebar-content .nav-link {
+                color: #6B4F4F; /* Coklat Muda */
+            }
+            .sidebar-content .nav-link:hover {
+                background-color: #F8F5F2; /* Krem Lembut */
+            }
+            .sidebar-content .nav-link.active {
+                background-color: #C87941; /* Terakota */
+                color: white;
+            }
         </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-krem">
             @include('layouts.navigation')
 
             <!-- [EDIT DARI SINI] Bungkus Konten dengan div.admin-wrapper -->
@@ -65,7 +79,7 @@
                 <!-- ========== START SIDEBAR ========== -->
                 <aside class="sidebar">
                     <div class="sidebar-content">
-                        <h4>Menu Utama</h4>
+                        <h4 class="text-coklat-tua">Menu Utama</h4>
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
@@ -83,14 +97,19 @@
                                 </a>
                             </li>
                             <hr class="my-2">
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('admin.pertemuan.*') || request()->routeIs('admin.absensi.*') ? 'active' : '' }}" href="{{ route('admin.pertemuan.create') }}">
-                                    Mulai Pertemuan
+                           <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.pertemuan.*') || request()->routeIs('admin.absensi.*') ? 'active' : '' }}" href="{{ route('admin.pertemuan.index') }}">
+                                    Riwayat Pertemuan
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.laporan.*') ? 'active' : '' }}" href="{{ route('admin.laporan.index') }}">
                                     Laporan & Tagihan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                                    Situs
                                 </a>
                             </li>
                         </ul>
@@ -118,5 +137,6 @@
             </div>
             <!-- [EDIT SAMPAI SINI] -->
         </div>
+        @stack('scripts')
     </body>
 </html>

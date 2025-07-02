@@ -34,4 +34,11 @@ class PertemuanController extends Controller
         // Redirect ke halaman absensi untuk pertemuan yang baru dibuat
         return redirect()->route('admin.absensi.create', ['pertemuan' => $pertemuan->id]);
     }
+    public function index(){
+        $daftarPertemuan = Pertemuan::with('kelas', 'siswaYangHadir') // Eager load
+                                ->latest('tanggal_pertemuan') // Urutkan dari yg terbaru
+                                ->paginate(10);
+
+        return view('admin.pertemuan.index', compact('daftarPertemuan'));
+    }
 }

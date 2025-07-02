@@ -49,6 +49,12 @@ class Pertemuan extends Model
      */
     public function siswaYangHadir(): BelongsToMany
     {
-        return $this->belongsToMany(Siswa::class, 'absensi');
+        return $this->belongsToMany(
+        Siswa::class,       // Model yang dihubungkan
+        'absensi',          // Nama tabel pivot
+        'pertemuan_id',     // Foreign key di pivot untuk model ini
+        'siswa_id'         // Foreign key di pivot untuk model yang dihubungkan
+        );
     }
+    
 }

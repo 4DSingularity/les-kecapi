@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('absensi', function (Blueprint $table) {
+        Schema::create('tagihan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pertemuan_id')->constrained('pertemuan')->onDelete('cascade');
             $table->foreignId('siswa_id')->constrained('siswa')->onDelete('cascade');
-            // Pastikan tidak ada duplikat siswa di pertemuan yang sama
-            $table->unique(['pertemuan_id', 'siswa_id']);
+            $table->integer('bulan');
+            $table->integer('tahun');
+            $table->integer('total_tagihan');
+            $table->integer('total_dibayar')->default(0);
+            $table->enum('status', ['lunas', 'belum lunas'])->default('belum lunas');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('absensi');
+        Schema::dropIfExists('tagihan');
     }
 };
